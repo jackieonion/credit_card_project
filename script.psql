@@ -10,6 +10,6 @@ create type CardLimit as enum ('1000', '2000', '3000');
 create type CardType as (creditLimit CardLimit, paymentTerms int, type CardTypeName);
 create domain Age int check(value > 0 and value < 125);
 create table Client (id serial primary key, billing int, registerDate date);
-create table CreditCard (id serial primary key, associatedAccount int unique not null, expiryDate date not null, cardType CardType not null default ('1000', 4, 'Standard'), client_id int references Client(id) on delete cascade on update cascade not null) with oids;
+create table CreditCard (id serial primary key, associatedAccount int unique not null, expiryDate date not null, cardType CardType not null default ('1000', 4, 'Standard'), client_id int not null) with oids;
 create table Person (nif varchar unique, fullName FullName, age Age) inherits (Client) with oids;
 create table Company (cif varchar unique, fiscalAddress FiscalAddress) inherits (Client) with oids;

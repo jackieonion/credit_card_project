@@ -10,10 +10,10 @@ $$ language plpgsql;
 create trigger pseudo_fk_for_creditcard_trigger before insert or update on creditcard 
 for each row execute procedure pseudo_fk_for_creditcard();
 
-insert into Person ('X1238754Q', FullName('Raul', 'Ortega', 'Barcells'), Age(23) , default, 1200, now());
+insert into Person values (default, 1200, now(), 'X1238754Q', ('Raul', 'Ortega', 'Barcells'), 23);
 
-insert into CreditCard values (default, 5123071230, now() + interval '5 YEAR', default, 'X1238754Q');
+insert into CreditCard values (default, 51230, now() + interval '5 YEAR', default, 1);
 
-insert into Company values ('S0794867B', FiscalAddress('Lluis Figueras', 544, 'Barcelona', 08017, 'Espanistan'), default, 125000, now());
+insert into Company values (default, 1500, now(), 'S0794867B', ('Lluis Figueras', 544, 'Barcelona', 08017, 'Espanistan'));
 
-insert into CreditCard values (default, 5123071230, now() + interval '10 YEAR', default, 'S0794867B');
+insert into CreditCard values (default, 51234, now() + interval '10 YEAR', ('2000', 12, 'Gold'), 2);
