@@ -1,3 +1,15 @@
+create or replace function pseudo_fk_for_creditcard() returns trigger as $$
+begin
+    if not exists(select id from client where id = new.client_id) then
+        raise exception 'No such person: %', new.client_id;
+    end if;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger pseudo_fk_for_creditcard_trigger before insert or update on creditcard 
+for each row execute procedure pseudo_fk_for_creditcard();
+
 insert into Person ('X1238754Q', FullName('Raul', 'Ortega', 'Barcells'), Age(23) , default, 1200, now());
 
 insert into CreditCard (default, 5123071230, now() + interval '5 YEAR', default, 'X1238754Q');
