@@ -1,17 +1,15 @@
-drop database if exists credit_cards_sl; -- Eliminem la base de dades en cas que existeixi
-create database credit_cards_sl; -- Creem la base de dades
-\c credit_cards; -- Entrem a la base de dades
+drop database if exists credit_cards_sl;
+create database credit_cards_sl;
 
--- TIPUS DE DADES
-create type FullName as (name varchar not null, firstSurname varchar not null, secondSurname varchar);
-create type FiscalAddress as (street varchar not null, number int, city varchar not null, postalCode int, country varchar not null);
-create type CardType as (creditLimit CardLimit not null default 1, paymentTerms int not null, type CardTypeName not null default 1);
-create type CardTypeName as enum("Standart", "Gold", "Premium");
-create type CardLimit as enum(1000, 2000, 3000);
+\c credit_cards_sl;
+
+create type FullName as (name varchar, firstSurname varchar, secondSurname varchar);
+create type FiscalAddress as (street varchar, number int, city varchar, postalCode int, country varchar);
+create type CardTypeName as enum ('Standard', 'Gold', 'Premium');
+create type CardLimit as enum ('1000', '2000', '3000');
+create type CardType as (creditLimit CardLimit, paymentTerms int, type CardTypeName);
 create domain Age int check(value > 0 and value < 125);
-
--- TAULES
-create table CreditCard (id int primary key serial, associatedAccount int unique not null, expiryDate date not null, cardType CardType not null default CardType(default, 4, default), client_id int references Client(id) on delete cascade on update cascade not null) with oids;
-create table Client (id int primary key serial, billing int, registerDate date);
-create table Person (nif varchar unique, fullName FullName, age Age) inherits Client with oids;
-create table Company (cif varchar unique, fiscalAddress FiscalAddress) inherits Client with oids;
+create table Client (id serial primary key, billing int, registerDate date);
+create table CreditCard (id serial primary key, associatedAccount int unique not null, expiryDate date not null, cardType CardType not null default ('1000', 4, 'Standard'), client_id int references Client(id) on delete cascade on update cascade not null) with oids;
+create table Person (nif varchar unique, fullName FullName, age Age) inherits (Client) with oids;
+create table Company (cif varchar unique, fiscalAddress FiscalAddress) inherits (Client) with oids;
