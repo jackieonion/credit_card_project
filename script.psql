@@ -3,12 +3,17 @@ create database credit_cards_sl;
 
 \c credit_cards_sl;
 
+--TYPES
 create type FullName as (name varchar, firstSurname varchar, secondSurname varchar);
 create type FiscalAddress as (street varchar, number int, city varchar, postalCode int, country varchar);
 create type CardTypeName as enum ('Standard', 'Gold', 'Premium');
 create type CardLimit as enum ('1000', '2000', '3000');
 create type CardType as (creditLimit CardLimit, paymentTerms int, type CardTypeName);
+
+--DOMAINS
 create domain Age int check(value > 0 and value < 125);
+
+--TABLES
 create table Client (id serial primary key, billing int, registerDate date);
 create table CreditCard (id serial primary key, associatedAccount int unique not null, expiryDate date not null, cardType CardType not null default ('1000', 4, 'Standard'), client_id int not null) with oids;
 create table Person (nif varchar unique, fullName FullName, age Age) inherits (Client) with oids;

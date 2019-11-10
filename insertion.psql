@@ -1,3 +1,11 @@
+--PROCEDURES
+/*
+* When we added inheritance to our project we realized that in PostgreSQL
+* tables doesn't inherit foreign keys.
+* The best solution we found was creating this procedure that checks the
+* insert and rejects to add a creditcard with an client_id that doesn't
+* exists.
+*/
 create or replace function pseudo_fk_for_creditcard() returns trigger as $$
 begin
     if not exists(select id from client where id = new.client_id) then
@@ -7,15 +15,14 @@ begin
 end;
 $$ language plpgsql;
 
+--TRIGGERS
 create trigger pseudo_fk_for_creditcard_trigger before insert or update on creditcard 
 for each row execute procedure pseudo_fk_for_creditcard();
 
+--INSERTIONS
 insert into Person values (default, 1200, now(), 'X1238754Q', ('Raul', 'Ortega', 'Barcells'), 23);
-
 insert into CreditCard values (default, 51230, now() + interval '5 YEAR', default, 1);
-
 insert into Company values (default, 1500, now(), 'S0794867B', ('Lluis Figueras', 544, 'Barcelona', 08017, 'Espanistan'));
-
 insert into CreditCard values (default, 51234, now() + interval '10 YEAR', ('2000', 12, 'Gold'), 2);
 
 insert into Person values (default, 1150, now(), 'X1233254Q', ('Laura', 'Silva', 'Rubio'), 25);
