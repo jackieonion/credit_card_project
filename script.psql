@@ -1,0 +1,16 @@
+drop database if exists credit_cards_sl; -- Eliminem la base de dades en cas que existeixi
+create database credit_cards_sl; -- Creem la base de dades
+\c credit_cards; -- Entrem a la base de dades
+
+-- TIPUS DE DADES
+create type FullName as (name varchar, firstSurname varchar, secondSurname varchar);
+create type FiscalAddress as (street varchar, number int, city varchar, postalCode int, country varchar);
+create type CardType as (id varchar, creditLimit int, paymentTerms int);
+
+-- TAULES
+create table CreditCard (id varchar, associatedAccount int, expiryDate date, cardType CardType) with oids;
+create table Client (id varchar, billing int, registerDate date);
+create table Person (nif varchar, fullName FullName, age int) inherits Client;
+create table Company (cif varchar, fiscalAddress FiscalAddress) inherits Client;
+
+
