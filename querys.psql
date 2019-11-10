@@ -1,3 +1,4 @@
 select id, associatedAccount, expiryDate from CreditCard where expiryDate < now() + interval ('5 DAY');
 select nif, fullName from Person where billing > 1000;
-select cif, fiscalAddress from Company where id = (select id from CreditCard where cardType = ('2000', 15, 'Gold'));
+select cif, fiscalAddress from Company where id = (select id from CreditCard where associatedAccount = 51235);
+select id, billing from Client where id = (select client_id from CreditCard where (cardType).creditLimit = '1000');
