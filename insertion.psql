@@ -20,23 +20,18 @@ create trigger pseudo_fk_for_creditcard_trigger before insert or update on credi
 for each row execute procedure pseudo_fk_for_creditcard();
 
 --INSERTIONS
+	--PERSONS
 insert into Person values (default, 1200, now(), 'X1238754Q', ('Raul', 'Ortega', 'Barcells'), 23);
-insert into CreditCard values (default, 51230, now() + interval '5 YEAR', default, 1);
-insert into Company values (default, 1500, now(), 'S0794867B', ('Lluis Figueras', 544, 'Barcelona', 08017, 'Espanistan'));
-insert into CreditCard values (default, 51234, now() + interval '10 YEAR', ('2000', 12, 'Gold'), 2);
-
 insert into Person values (default, 1150, now(), 'X1233254Q', ('Laura', 'Silva', 'Rubio'), 25);
-
-insert into CreditCard values (default, 51231, now() + interval '5 YEAR', ('3000', 12, 'Standard'), 3);
-
-insert into Company values (default, 125000, now(), 'S0794677B', ('Fleming', 344, 'Barcelona', 08014, 'Espanistan'));
-
-insert into CreditCard values (default, 51232, now() + interval '10 YEAR', ('3000', 2, 'Premium'), 4);
-
 insert into Person values (default, 950, now(), 'X1234554Q', ('Silvia', 'Tigret', 'Gimenez'), 19);
-
-insert into CreditCard values (default, 51235, now() + interval '5 YEAR', ('2000', 15, 'Gold'), 5);
-
+	--COMPANIES
+insert into Company values (default, 1500, now(), 'S0794867B', ('Lluis Figueras', 544, 'Barcelona', 08017, 'Espanistan'));
+insert into Company values (default, 125000, now(), 'S0794677B', ('Fleming', 344, 'Barcelona', 08014, 'Espanistan'));
 insert into Company values (default, 50000, now(), 'S0754677B', ('Gran Via', 542, 'Barcelona', 08013, 'Espanistan'));
-
+	--CREDIT CARDS
+insert into CreditCard values (default, 51230, now() + interval '5 YEAR', default, 1);
+insert into CreditCard values (default, 51234, now() + interval '10 YEAR', ('2000', 12, 'Gold'), 2);
+insert into CreditCard values (default, 51231, now() + interval '5 YEAR', ('3000', 12, 'Standard'), 3);
+insert into CreditCard values (default, 51232, now() + interval '10 YEAR', ('3000', 2, 'Premium'), 4);
+insert into CreditCard values (default, 51235, now() + interval '5 YEAR', ('2000', 15, 'Gold'), 5);
 insert into CreditCard values (default, 51236, now() + interval '10 YEAR', ('3000', 3, 'Premium'), 6);
