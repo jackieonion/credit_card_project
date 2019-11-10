@@ -1,6 +1,6 @@
-update Person set age = 24 where fullName = ('Raul', 'Ortega', 'Barcells');
-update Company set registerDate = now + interval '5 YEAR' where cif = 'S0754677B';
+update Person set age = 24 where (fullName).name = 'Raul';
+update Company set registerDate = now() + interval '5 YEAR' where cif = 'S0754677B';
 update CreditCard set cardType = ('3000', 1, 'Premium') where associatedAccount = '51232';
-delete CreditCard where expiryDate < now() + interval '5 YEAR';
-delete CreditCard where client_id = (select id from client where billing = 1200);
-delete client where billing = 1200;
+delete from CreditCard where expiryDate < now() + interval '5 YEAR';
+delete from CreditCard where client_id = (select id from client where billing = 1200);
+delete from client where billing = 1200;
