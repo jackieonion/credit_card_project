@@ -1,0 +1,7 @@
+insert into Person ('X1238754Q', FullName('Raul', 'Ortega', 'Barcells'), Age(23) , default, 1200, now());
+
+insert into CreditCard (default, 5123071230, now() + interval '5 YEAR', default, 'X1238754Q');
+
+insert into Company ('S0794867B', FiscalAddress('Lluis Figueras', 544, 'Barcelona', 08017, 'Espanistan'), default, 125000, now());
+
+insert into CreditCard (default, 5123071230, now() + interval '10 YEAR', default, 'S0794867B');
