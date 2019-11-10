@@ -3,14 +3,15 @@ create database credit_cards_sl; -- Creem la base de dades
 \c credit_cards; -- Entrem a la base de dades
 
 -- TIPUS DE DADES
-create type FullName as (name varchar, firstSurname varchar, secondSurname varchar);
-create type FiscalAddress as (street varchar, number int, city varchar, postalCode int, country varchar);
-create type CardType as (id varchar, creditLimit int, paymentTerms int);
+create type FullName as (name varchar not null, firstSurname varchar not null, secondSurname varchar);
+create type FiscalAddress as (street varchar not null, number int, city varchar not null, postalCode int, country varchar not null);
+create type CardType as (id varchar not null, creditLimit CardLimit not null default 1, paymentTerms int not null, type CardTypeName not null default 1);
+create type CardTypeName as enum("Standart", "Gold", "Premium");
+create type CardLimit as enum(1000, 2000, 3000);
+create domain Age int check(value > 0 and value < 125);
 
 -- TAULES
-create table CreditCard (id varchar, associatedAccount int, expiryDate date, cardType CardType) with oids;
-create table Client (id varchar, billing int, registerDate date);
-create table Person (nif varchar, fullName FullName, age int) inherits Client;
-create table Company (cif varchar, fiscalAddress FiscalAddress) inherits Client;
-
-
+create table CreditCard (id int primary key, associatedAccount int unique, expiryDate date, cardType CardType, client_id int references Client(id) on delete cascade on update cascade) with oids;
+create table Client (id int primary key, billing int, registerDate date);
+create table Person (nif varchar unique, fullName FullName, age Age) inherits Client with oids;
+create table Company (cif varchar unique, fiscalAddress FiscalAddress) inherits Client with oids;
